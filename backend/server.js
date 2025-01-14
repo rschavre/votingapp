@@ -40,7 +40,7 @@ async function SMongoConnect() {
 
 async function SVoteOptions() {
   try {
-    const validVoteOptionsl = await validVoteOptionsCollection.find().toArray();
+    const validVoteOptionsl = await validVoteOptionsCollection.find({},{ projection: { _id: 0 }}).toArray();
     validVoteOptions = validVoteOptionsl;
     console.log(validVoteOptions);
     if (!validVoteOptions.length) {
