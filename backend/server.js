@@ -140,12 +140,17 @@ app.post("/api/vote", authenticateToken, async (req, res) => {
 
 // Fetch Votes
 app.get("/api/votes", async (req, res) => {
+  const allOptions = validVoteOptions.reduce((acc, item) => {
+    acc[item.option] = 0;  // Set the value of each key to 0
+    return acc;
+  }, {});  // Initialize the accumulator as an empty object
+  
   try {
     const votes = await votesCollection.find().toArray();
     const voteCounts = votes.reduce((acc, vote) => {
       acc[vote.option] = (acc[vote.option] || 0) + 1;
       return acc;
-    }, {});
+    }, allOptions);
 
     res.json(voteCounts);
   } catch (err) {
