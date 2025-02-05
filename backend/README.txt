@@ -7,10 +7,10 @@ node server.js
     Change vote option in conf_validvotes.txt
     Each vote option in new line
 
-    Run db_init.js for filling db with valid vote options
-node db_init.js
+    Run db_init.cjs for filling db with valid vote options
+node db_init.cjs
 node server.js
 
 // EMPTY Run + create vote option in db + empty votes + clear users
-node db_init.js --clear
+node db_init.cjs --clear
 node server.js

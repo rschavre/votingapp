@@ -22,11 +22,12 @@ try {
     console.error("Error reading the file:", err);
 }
 
-
+const dotenv = require("dotenv");
+dotenv.config({path:"./config.env"});
 const { MongoClient } = require("mongodb");
 const { exit } = require('process');
-const DB_MONGO_URI = "mongodb://127.0.0.1:27017";
-const DB_NAME = "voting";
+const DB_MONGO_URI = process.env.DB_MONGO_URI //|| "mongodb://127.0.0.1:27017";
+const DB_NAME = process.env.DB_NAME;
 
 // Connect to MongoDB
 async function SMongoConnectAndFillOptions() {
