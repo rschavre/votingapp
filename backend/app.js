@@ -5,6 +5,7 @@ import express from "express"
 import bodyParser from "body-parser"
 import { SMongoInit } from "./database/db.js"
 import mainrouter from "./routes/routes.js"  
+import userrouter from "./routes/user.js"  
 
 /* Phase 0 Import env*/
 config({ path: "./config.env" });
@@ -22,6 +23,7 @@ app.use(cookieParser())
 app.use(bodyParser.json()); // Middleware
 
 app.use("/api",mainrouter);
+app.use("/api/user",userrouter);
 
 // await SMongoInit(); // Initialise our database and it's connection
 SMongoInit(); // Initialise our database and it's connection

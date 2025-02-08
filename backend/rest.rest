@@ -1,20 +1,20 @@
 ### Register
-POST http://127.0.0.1:5000/api/register
+POST http://127.0.0.1:5000/api/user/register
 Content-Type: application/json
 
-{"email" :"q@q.q","password": "123" }
+{"email" :"q@q.q1","password": "123" }
 
 ### Login
 
-POST http://127.0.0.1:5000/api/login
+POST http://127.0.0.1:5000/api/user/login
 Content-Type: application/json
 
-{"email" :"q@q.q","password": "123" }
+{"email" :"q@q.q1","password": "123" }
 
 ### Cast Vote
 
 POST http://127.0.0.1:5000/api/vote
-Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWY0YTQ5YjE2NTE4NWVlNDRjNjVlNSIsImlhdCI6MTczODQ5MjQ5MSwiZXhwIjoxNzM4NDk2MDkxfQ.pkcIobu0AapN6UB1WlaKxR5F7DK1DdP784lfgedPctU
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTc0MDg2NjY3ZTBhOWFjM2M1NjFhMiIsImlhdCI6MTczOTAxNDMwOCwiZXhwIjoxNzM5MDE3OTA4fQ.Zyd_n1UQssO2TPBhqODQUgfWrPGi1p8SQJknRRvY_YA
 Content-Type: application/json
 
 {"option" :"Dog" }
