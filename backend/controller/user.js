@@ -40,6 +40,12 @@ export const loginUser =  async (req, res) => {
     // Sign the payload with MongoDb _id field, used to retrieve user when auth header is set to "token <jwt>"
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
     res.json({ token });
+    // res.cookie('jwt', token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
+    //   sameSite: 'strict', // Prevent CSRF attacks
+    //   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    // });
   } catch (err) {
     console.log(err);
 

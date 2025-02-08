@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 // Middleware to authenticate requests using JWT
 export const authenticateToken = (req, res, next) => {
   // console.log(req.headers);
+  // const token = req.cookies.jwt;
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).send("Access Denied");
 
