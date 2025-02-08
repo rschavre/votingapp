@@ -1,63 +1,47 @@
-// import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
+import {  Link, useNavigate } from "react-router";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { useEffect } from "react";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
-import { NavLink } from "react-router";
-// import { useSelector, useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import { useLogoutMutation } from "../slices/usersApiSlice";
-// import { logout } from "../slices/authSlice";
+import useLogout from "../hooks/useLogout.jsx";
+import { useAuth } from "../hooks/useAuth.jsx";
 
 const Header = () => {
-  //   const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-  //   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
-
-  //   const [logoutApiCall] = useLogoutMutation();
-
-  const logoutHandler = async () => {
-    try {
-      //   await logoutApiCall().unwrap();
-      //   dispatch(logout());
-      //   navigate("/login");
-    } catch (err) {
-      console.error(err);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
     }
-  };
-  const userInfo = { name: "name" };
+  }, [navigate, user]);
+
+  const { logout } = useLogout();
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <NavLink to="/">
-            <Navbar.Brand>Voting</Navbar.Brand>
-          </NavLink>
+          <Navbar.Brand as={Link} to="/">
+            Voting
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              {userInfo ? (
-                <>
-                  <NavDropdown title={userInfo.name} id="username">
-                    <NavLink to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </NavLink>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
+              {user ? (
+                <NavDropdown title={user.email} id="username">
+                  {/* <NavDropdown.Item as={Link} to="/profile">
+                    Profile
+                  </NavDropdown.Item> */}
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                </NavDropdown>
               ) : (
                 <>
-                  <NavLink to="/login">
-                    <Nav.Link>
-                      <FaSignInAlt /> Sign In
-                    </Nav.Link>
-                  </NavLink>
-                  <NavLink to="/register">
-                    <Nav.Link>
-                      <FaSignOutAlt /> Sign Up
-                    </Nav.Link>
-                  </NavLink>
+                  <Nav.Link as={Link} to="/login">
+                    <FaSignInAlt /> Sign In
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/register">
+                    <FaSignOutAlt /> Sign Up
+                  </Nav.Link>
                 </>
               )}
             </Nav>

@@ -16,7 +16,7 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    res.status(201).send("User registered");
+    res.status(201).send(JSON.stringify({email}));
 
   } catch (err) {
     console.log(err);
