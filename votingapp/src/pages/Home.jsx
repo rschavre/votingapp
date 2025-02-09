@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import * as fetchOptions from "../utils/fetchOptions.jsx";
 import VoteResults from "../components/voteResults.jsx";
+import { Alert } from "react-bootstrap";
+import Loader from "../components/loader.jsx";
 
 function Home() {
   const [options, setOptions] = useState({});
@@ -8,7 +10,6 @@ function Home() {
   const [error, setError] = useState(null);
   const retryCount = useRef(3);
   const timeoutRef = useRef(null);
-  
 
   const fetchData = async () => {
     // console.log("Retry attempts left:", retryCount.current);
@@ -50,8 +51,13 @@ function Home() {
     };
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return Loader;
+  if (error)
+    return (
+      <Alert variant="danger" className="mt-3">
+        {error}
+      </Alert>
+    );
 
   return (
     <>
