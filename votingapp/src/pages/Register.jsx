@@ -2,32 +2,42 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/formContainer.jsx";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useLoginMutation } from "../slices/usersApiSlice";
-// import { setCredentials } from "../slices/authSlice";
-// import { toast } from "react-toastify";
 import Loader from "../components/loader.jsx";
-import useLogin from "../hooks/useLogin.jsx";
+import useRegister from "../hooks/useRegister.jsx";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
+  const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useLogin();
-  //   const dispatch = useDispatch();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { register, errorReg, isLoading } = useRegister();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (errorReg) {
+      setError(errorReg);
+    }
+  }, [errorReg]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-      await login(email, password);
-    } catch (e) {
-      console.log("MESSAGE", e.message);
+    setError(null);
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const isSuccess = await register(email, password);
+
+    if (isSuccess) {
+      navigate("/login"); // Navigate only if registration was successful
     }
   };
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>Register</h1>
 
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="email">
@@ -37,7 +47,7 @@ const LoginScreen = () => {
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Form.Group className="my-2" controlId="password">
@@ -47,7 +57,17 @@ const LoginScreen = () => {
             placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
+          />
+        </Form.Group>
+
+        <Form.Group className="my-2" controlId="confirmpassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
         </Form.Group>
 
         <Button
@@ -56,7 +76,7 @@ const LoginScreen = () => {
           variant="primary"
           className="mt-3"
         >
-          Sign In
+          {isLoading ? "Registering..." : "Register"}
         </Button>
       </Form>
 
@@ -70,11 +90,11 @@ const LoginScreen = () => {
 
       <Row className="py-3">
         <Col>
-          New User? <NavLink to="/register">Register</NavLink>
+          Already a User? <NavLink to="/login">Login</NavLink>
         </Col>
       </Row>
     </FormContainer>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

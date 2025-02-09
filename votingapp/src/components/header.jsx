@@ -1,7 +1,7 @@
 import {  Link, useNavigate } from "react-router";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { useEffect } from "react";
-import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt, FaUserPlus } from "react-icons/fa";
 import useLogout from "../hooks/useLogout.jsx";
 import { useAuth } from "../hooks/useAuth.jsx";
 
@@ -40,7 +40,7 @@ const Header = () => {
                     <FaSignInAlt /> Sign In
                   </Nav.Link>
                   <Nav.Link as={Link} to="/register">
-                    <FaSignOutAlt /> Sign Up
+                    <FaUserPlus /> Sign Up
                   </Nav.Link>
                 </>
               )}
