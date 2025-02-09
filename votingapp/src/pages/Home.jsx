@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import * as fetchOptions from "../utils/fetchOptions.jsx";
+import VoteResults from "../components/voteResults.jsx";
 
 function Home() {
   const [options, setOptions] = useState({});
@@ -7,6 +8,7 @@ function Home() {
   const [error, setError] = useState(null);
   const retryCount = useRef(3);
   const timeoutRef = useRef(null);
+  
 
   const fetchData = async () => {
     // console.log("Retry attempts left:", retryCount.current);
@@ -53,16 +55,7 @@ function Home() {
 
   return (
     <>
-      <div data-style={{ display: "flex", placeItems: "center" }}>
-        <h2>Current Votes for Option:</h2>
-        <ul>
-          {Object.entries(options).map(([key, value]) => (
-            <li key={key}>
-              {key} : {value}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <VoteResults options={options} />
     </>
   );
 }
